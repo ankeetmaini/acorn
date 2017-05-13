@@ -1,6 +1,5 @@
 import {types as tt} from "./tokentype"
 import {Parser} from "./state"
-import {has} from "./util"
 
 const pp = Parser.prototype
 
@@ -177,16 +176,11 @@ pp.parseMaybeDefault = function(startPos, startLoc, left) {
 // 'let' indicating that the lval creates a lexical ('let' or 'const') binding
 // 'none' indicating that the binding should be checked for illegal identifiers, but not for duplicate references
 
-pp.checkLVal = function(expr, bindingType, checkClashes) {
+pp.checkLVal = function(expr, bindingType) {
   switch (expr.type) {
   case "Identifier":
     if (this.strict && this.reservedWordsStrictBind.test(expr.name))
       this.raiseRecoverable(expr.start, (bindingType ? "Binding " : "Assigning to ") + expr.name + " in strict mode")
-    if (checkClashes) {
-      if (has(checkClashes, expr.name))
-        this.raiseRecoverable(expr.start, "Argument name clash")
-      checkClashes[expr.name] = true
-    }
     if (bindingType && bindingType !== "none") {
       let canDeclare
       if (bindingType === "var") {
@@ -207,24 +201,24 @@ pp.checkLVal = function(expr, bindingType, checkClashes) {
 
   case "ObjectPattern":
     for (let i = 0; i < expr.properties.length; i++)
-      this.checkLVal(expr.properties[i].value, bindingType, checkClashes)
+      this.checkLVal(expr.properties[i].value, bindingType)
     break
 
   case "ArrayPattern":
     for (let i = 0; i < expr.elements.length; i++) {
       let elem = expr.elements[i]
-      if (elem) this.checkLVal(elem, bindingType, checkClashes)
+      if (elem) this.checkLVal(elem, bindingType)
     }
     break
 
   case "AssignmentPattern":
-    return this.checkLVal(expr.left, bindingType, checkClashes)
+    return this.checkLVal(expr.left, bindingType)
 
   case "RestElement":
-    return this.checkLVal(expr.argument, bindingType, checkClashes)
+    return this.checkLVal(expr.argument, bindingType)
 
   case "ParenthesizedExpression":
-    return this.checkLVal(expr.expression, bindingType, checkClashes)
+    return this.checkLVal(expr.expression, bindingType)
 
   default:
     return this.raise(expr.start, (bindingType ? "Binding" : "Assigning to") + " rvalue")

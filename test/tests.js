@@ -27466,7 +27466,7 @@ testFail("\"use strict\"; function static() { }",
          "The keyword 'static' is reserved (1:23)");
 
 testFail("function a(t, t) { \"use strict\"; }",
-         "Argument name clash (1:14)");
+         "Identifier 't' has already been declared (1:14)");
 
 testFail("function a(eval) { \"use strict\"; }",
          "Binding eval in strict mode (1:11)");
@@ -27475,13 +27475,13 @@ testFail("function a(package) { \"use strict\"; }",
          "Binding package in strict mode (1:11)");
 
 testFail("function a() { \"use strict\"; function b(t, t) { }; }",
-         "Argument name clash (1:43)");
+         "Identifier 't' has already been declared (1:43)");
 
 testFail("(function a(t, t) { \"use strict\"; })",
-         "Argument name clash (1:15)");
+         "Identifier 't' has already been declared (1:15)");
 
 testFail("function a() { \"use strict\"; (function b(t, t) { }); }",
-         "Argument name clash (1:44)");
+         "Identifier 't' has already been declared (1:44)");
 
 testFail("(function a(eval) { \"use strict\"; })",
          "Binding eval in strict mode (1:12)");

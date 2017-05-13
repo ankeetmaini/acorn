@@ -12690,7 +12690,7 @@ testFail("function default() {}", "Unexpected token (1:9)", {ecmaVersion: 6});
 
 testFail("function hello() {'use strict'; ({ i: 10, s(eval) { } }); }", "Binding eval in strict mode (1:44)", {ecmaVersion: 6});
 
-testFail("function a() { \"use strict\"; ({ b(t, t) { } }); }", "Argument name clash (1:37)", {ecmaVersion: 6});
+testFail("function a() { \"use strict\"; ({ b(t, t) { } }); }", "Identifier 't' has already been declared (1:37)", {ecmaVersion: 6});
 
 testFail("var super", "Unexpected token (1:4)", {ecmaVersion: 6});
 
@@ -12730,11 +12730,11 @@ testFail("\"use strict\"; (arguments, a) => 42", "Binding arguments in strict mo
 
 testFail("\"use strict\"; (eval, a = 10) => 42", "Binding eval in strict mode (1:15)", {ecmaVersion: 6});
 
-testFail("(a, a) => 42", "Argument name clash (1:4)", {ecmaVersion: 6});
+testFail("(a, a) => 42", "Identifier 'a' has already been declared (1:4)", {ecmaVersion: 6});
 
-testFail("function foo(a, a = 2) {}", "Argument name clash (1:16)", {ecmaVersion: 6});
+testFail("function foo(a, a = 2) {}", "Identifier 'a' has already been declared (1:16)", {ecmaVersion: 6});
 
-testFail("\"use strict\"; (a, a) => 42", "Argument name clash (1:18)", {ecmaVersion: 6});
+testFail("\"use strict\"; (a, a) => 42", "Identifier 'a' has already been declared (1:18)", {ecmaVersion: 6});
 
 testFail("\"use strict\"; (a) => 00", "Invalid number (1:21)", {ecmaVersion: 6});
 
@@ -13039,9 +13039,9 @@ testFail("function f(a, ...b = 0)", "Unexpected token (1:19)", {ecmaVersion: 6})
 
 testFail("function x(...{ a }){}", "Unexpected token (1:14)", {ecmaVersion: 6});
 
-testFail("\"use strict\"; function x(a, { a }){}", "Argument name clash (1:30)", {ecmaVersion: 6});
+testFail("\"use strict\"; function x(a, { a }){}", "Identifier 'a' has already been declared (1:30)", {ecmaVersion: 6});
 
-testFail("\"use strict\"; function x({ b: { a } }, [{ b: { a } }]){}", "Argument name clash (1:47)", {ecmaVersion: 6});
+testFail("\"use strict\"; function x({ b: { a } }, [{ b: { a } }]){}", "Identifier 'a' has already been declared (1:47)", {ecmaVersion: 6});
 
 testFail("\"use strict\"; function x(a, ...[a]){}", "Unexpected token (1:31)", {ecmaVersion: 6});
 

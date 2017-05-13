@@ -771,8 +771,8 @@ pp.isSimpleParamList = function(params) {
 // or "arguments" and duplicate parameters.
 
 pp.checkParams = function(node, allowDuplicates) {
-  let nameHash = map()
-  for (let i = 0; i < node.params.length; i++) this.checkLVal(node.params[i], "var", allowDuplicates ? null : nameHash)
+  for (let i = 0; i < node.params.length; i++)
+    this.checkLVal(node.params[i], allowDuplicates ? "var" : "let")
 }
 
 // Parses a comma-separated list of expressions, and returns them as
